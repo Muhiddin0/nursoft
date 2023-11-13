@@ -1,7 +1,7 @@
 <template>
-    <a href="">
+    <NuxtLink to="/">
         <span>Nursoft</span> <sup>UZ</sup>
-    </a>
+    </NuxtLink>
 </template>
 
 <script>

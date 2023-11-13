@@ -33,39 +33,32 @@
             <button @click="signup" class="btn bg-green-500 text-white self-center w-[300px]">
               SIGN UP
             </button>
-            <p>
+            <p class="text-center my-2">
               By clicking Create account, I agree that I have read and accepted
               the
               <a class="text-green-500" href="google.com">Terms of Use</a> and
               <a class="text-green-500" href="google.com"> Privacy Policy.</a>
             </p>
+            <p class="text-center max-w-[274px] mx-auto mt-6 mb-3">
+              You have alredy account
+              <NuxtLink class="text-green-500 border-b-2 border-dashed border-green-500" to="/signup">Signup</NuxtLink>
+              hear
+            </p>
           </div>
+        </div>
+
+        <div class="flex flex-col gap-4 items-center mt-7 w-[100%] md:w-[446px] p-1 md:p-3">
+          <button @click="googleAuth" class="btn gap-3 w-[100%] sm:w-[400px] bg-orange-600 text-white">
+            <Icon name="bi:google" />
+            Google
+          </button>
         </div>
       </div>
 
-      <div class="flex flex-col items-center gap-4 mt-7 w-[100%]">
-        <button class="btn gap-3 w-[300px] bg-black text-white">
-          <Icon name="mdi:github" />
-          Git Hub
-        </button>
-        <button class="btn gap-3 w-[300px] bg-cyan-400 text-white">
-          <Icon name="mdi:twitter" />
-          Twitter
-        </button>
-        <button class="btn gap-3 w-[300px] bg-cyan-600 text-white">
-          <Icon name="ic:twotone-facebook" />
-          Facebook
-        </button>
-        <button class="btn gap-3 w-[300px] bg-orange-600 text-white">
-          <Icon name="bi:google" />
-          Google
-        </button>
-      </div>
     </div>
-
   </section>
 
-  <Messages />
+  <Messages v-for="message in messages" :message="message" />
 </template>
 
 <script>
@@ -74,8 +67,18 @@ import {
   getAuth,
   setPersistence,
   browserLocalPersistence,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  TwitterAuthProvider,
+  FacebookAuthProvider,
 } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
+const twitterProvider = new TwitterAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 
 useFirebase();
 const auth = getAuth();
@@ -88,47 +91,80 @@ export default {
       password_2: "",
       first_name: "",
       last_name: "",
-      messages: []
+      messages: [],
     };
   },
   methods: {
-
-    valdidate(){
-      
-    }
-    
     signup(e) {
-      
-      e.target.style = "cursor: no-drop;"
-      e.target.setAttribute('disable', 'true')
-      
+      e.target.style = "cursor: no-drop;";
+      e.target.setAttribute("disable", "true");
 
-      
+      if (this.password_1 != this.password_2) {
+        this.messages.push("Password 1 not iqual Passowd 2");
+        return;
+      }
+
       setPersistence(auth, browserLocalPersistence).then(() => {
         createUserWithEmailAndPassword(auth, this.email, this.password_1)
           .then((userDetails) => {
+            this.$router.push("/news");
+            console.log("auth succesfuly");
+
             user.value = userDetails.user;
             userDetails.user.getIdToken().then((token) => {
               serverAuth(token);
             });
           })
           .catch((e) => {
-            this.messages.push(e.code)
+            this.messages.push(e.code);
           });
       });
 
-      e.target.style = ""
-      e.target.removeAttribute('disable')
-
+      e.target.style = "";
+      e.target.removeAttribute("disable");
     },
+
+    googleAuth() {
+      signInWithPopup(auth, googleProvider)
+        .then((e) => {
+          this.$router.push("/news");
+        })
+        .catch((error) => {
+          this.messages.push(error.code);
+        });
+    },
+    gitHubAuth() {
+      signInWithPopup(auth, githubProvider)
+        .then((e) => {
+          this.$router.push("/news");
+        })
+        .catch((error) => {
+          this.messages.push(error.code);
+        });
+    },
+    twitterAuth() {
+      signInWithPopup(auth, twitterProvider)
+        .then((e) => {
+          this.$router.push("/news");
+        })
+        .catch((error) => {
+          this.messages.push(error.code);
+        });
+    },
+    facebookAuth() {
+      signInWithPopup(auth, facebookProvider)
+        .then((e) => {
+          this.$router.push("/news");
+        })
+        .catch((error) => {
+          this.messages.push(error.code);
+        });
+    },
+
     changeValue(e) {
       let labelElm = e.target.parentElement;
       labelElm.classList.add("active");
     },
-  },
-  mounted() {
-    messages.push("salom");
-    console.log(messages);
   },
 };
 </script>

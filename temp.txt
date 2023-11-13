@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-4 items-center mt-7 w-[100%] md:w-[446px] p-1 md:p-3">
+    <button class="btn gap-3 w-[100%] sm:w-[400px] bg-black text-white">
+    <Icon name="mdi:github" />
+    Git Hub
+    </button>
+    <button class="btn gap-3 w-[100%] sm:w-[400px] bg-cyan-400 text-white">
+    <Icon name="mdi:twitter" />
+    Twitter
+    </button>
+    <button class="btn gap-3 w-[100%] sm:w-[400px] bg-cyan-600 text-white">
+    <Icon name="ic:twotone-facebook" />
+    Facebook
+    </button>
+    <button @click="googleAuth" class="btn gap-3 w-[100%] sm:w-[400px] bg-orange-600 text-white">
+    <Icon name="bi:google" />
+    Google
+    </button>
+</div>

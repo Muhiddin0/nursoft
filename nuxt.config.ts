@@ -2,10 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/styles/main.css"],
-  modules: [
-    "nuxt-aos",
-    "nuxt-icon",
-  ],
+  modules: ["nuxt-aos", "nuxt-icon"],
 
   postcss: {
     plugins: {

@@ -41,7 +41,7 @@ export default function useAuth() {
     auth.signOut().then(() => {});
   }
 
-  function signUp(email, password, name ) {
+  function signUp(email, password, name) {
     console.log(email, password, name);
     resetErrors();
     const validatedData = useAuthValidator(email, password, name, "signup");
@@ -50,15 +50,14 @@ export default function useAuth() {
       return;
     }
     setPersistence(auth, browserLocalPersistence).then(() => {
-      createUserWithEmailAndPassword(auth, email, password).then(
-        (userDetails) => {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userDetails) => {
           user.value = userDetails.user;
           userDetails.user.getIdToken().then((token) => {
             serverAuth(token);
           });
-        }
-      )
-      .catch(e => console.log(e.stat))
+        })
+        .catch((e) => console.log(e.stat));
     });
   }
 

@@ -27,9 +27,9 @@
         </ul>
       </div>
 
-      <div data-aos="fade-up" class="flex justify-center items-end w-[100%] xl:w-[50%] mb-[70px]">
+      <div data-aos="fade-up" class="flex justify-center items-end w-[100%]  mb-[70px]">
         <img
-          class="img lg:w-[80%] w-[400px] translate-y-0 md:translate-y-10 top-0 left-0 z-10 text-white"
+          class="img w-[400px] translate-y-0 md:translate-y-10 top-0 left-0 z-10 text-white"
           :src="addsimg"
         />
       </div>

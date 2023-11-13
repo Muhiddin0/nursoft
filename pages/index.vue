@@ -8,7 +8,7 @@
         </h1>
         <b>Discover, subscribe and manage all <br />
           your email newsletters in one place.</b>
-        <a class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</a>
+        <NuxtLink to="/signup" class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</NuxtLink>
       </div>
       <div data-aos="fade-left" class="img-box">
         <img :src="homeImg" alt="" />
@@ -60,6 +60,8 @@
 
 <script>
 import homeImg from "../assets/images/home.svg";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 export default {
   data() {
@@ -68,7 +70,11 @@ export default {
     };
   },
   beforeCreate() {
-    console.log('salom');
+    useFirebase()
+    const auth = getAuth();
+
+    if (auth.currentUser)
+      this.$router.push('/news')
   }
 };
 </script>

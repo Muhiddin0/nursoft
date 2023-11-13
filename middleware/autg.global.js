@@ -8,14 +8,35 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
+    
+    const services_pages = [
+      'news',
+      'faq',
+      'upgradepro',
+      'explore',
+      'settings',
+      'settings-account',
+      'settings-appearance',
+      'settings-organize-labes',
+      'settings-organize-sourse',
+      'settings-price',
+      'settings-terms',
+      'settings-upgradepro',
+      'read',
+    ]
+
     if (user) {
+      // services_pages.forEach(e => {
+      //   if (e == to.name) return 
+      // })
       
-      const uid = user.uid;
-      console.log(uid);
-      return navigateTo('/news')
+      // return navigateTo('/news')
     } else {
-      console.log('not auth');
-      return navigateTo('/')
+      services_pages.forEach(e => {
+        if (e == to.name){
+          return navigateTo('/')
+        }
+      })
     }
   });
 });

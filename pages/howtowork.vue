@@ -5,7 +5,7 @@
         <h1 class="max-w-[588px]">How Newsletter-App works?</h1>
         <b class="max-w-[450px]">Learn how to discover, subscribe and manage all newsletters in one
           place.</b>
-        <a class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</a>
+        <NuxtLink to="/signup" class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</NuxtLink>
       </div>
       <div data-aos="fade-left" class="img-box">
         <img class="max-w-[500px]" :src="howtowork" alt="how to work img" />
@@ -108,7 +108,7 @@
         <h1 data-aos="fade-right" class="max-w-[588px]">How Newsletter-App works?</h1>
         <b data-aos="fade-right" class="max-w-[450px]">Learn how to discover, subscribe and manage all newsletters in one
           place.</b>
-        <a data-aos="fade-right" class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</a>
+        <NuxtLink to="/signup" data-aos="fade-right" class="btn bg-green-500 text-white mt-[60px]">TRY FOR FREE</NuxtLink>
       </div>
       <div data-aos="fade-left" class="img-box">
         <img class="max-w-[300px]" :src="sircule" alt="how to work img" />
@@ -152,6 +152,7 @@ import productView from "../assets/images/productView.svg";
 import userMode from "../assets/images/userMode.svg";
 import sircule from "../assets/images/loop.png";
 import exprerts from "../assets/images/exprerts.svg";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   data() {
@@ -164,6 +165,13 @@ export default {
       exprerts,
     };
   },
+  beforeCreate() {
+    useFirebase()
+    const auth = getAuth();
+
+    if (auth.currentUser)
+      this.$router.push('/news')
+  }
 };
 </script>
 

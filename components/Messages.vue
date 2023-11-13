@@ -3,7 +3,7 @@
         <button class="absolute top-[0] left-[0] translate-x-[-12px] translate-y-[-12px] bg-white rounded-full">
             <Icon size="24px" name="mdi:close-circle" />
         </button>
-        <p class="whitespace-nowrap">This email is alredy register</p>
+        <p class="whitespace-nowrap">{{ props.message }}</p>
         <div id="message-loader"></div>
     </div>
 </template>
@@ -11,11 +11,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+const props = defineProps(['message'])
 const message = ref(null)
 
-// setInterval(e => {
-//     message.value.remove()
-// }, 1000 * 3)
+setTimeout(() => {
+    message.value?.classList.add('hidden')
+}, 1000 *3);
+
 </script>
 
 <style scoped>

@@ -27,7 +27,9 @@
         <NuxtLink to="/settings/account" class="text-lg font-bold hover:text-green-500 transition-all">Account</NuxtLink>
         <NuxtLink to="/settings/terms" class="text-lg font-bold hover:text-green-500 transition-all">Terms of use
         </NuxtLink>
-        <button @click="logoutModal" class="text-lg text-start font-bold text-red-500 hover:text-red-300 transition-all">Logout</button>
+        <button @click="logoutModal" class="text-lg text-start font-bold text-red-500 hover:text-red-300 transition-all">
+          Logout
+        </button>
       </div>
     </section>
 
@@ -62,25 +64,25 @@
     </section>
   </main>
 
-  <section class="absolute hidden z-10 top-0 left-0 bg-[#221e1eba] justify-center items-center w-[100%] h-[100vh] p-7" ref="logout">
+  <section class="absolute hidden z-10 top-0 left-0 bg-[#221e1eba] justify-center items-center w-[100%] h-[100vh] p-7"
+    ref="logout">
     <div class="bg-white w-[700px] p-[1em] rounded-lg">
       <h1 class="text-3xl">Are you Logout</h1>
       <div class="flex justify-end flex-wrap gap-3 mt-[100px]">
-        <button @click="logout" class="btn border-[2px] border-stone-500 text-stone-500 rounded-full">Logout</button>
-        <button @click="logoutModal" class="btn border-[2px] bg-green-500 text-white rounded-full">Cancel</button>
+        <button @click="logout" class="btn border-[2px] border-stone-500 text-stone-500 rounded-full">
+          Logout
+        </button>
+        <button @click="logoutModal" class="btn border-[2px] bg-green-500 text-white rounded-full">
+          Cancel
+        </button>
       </div>
     </div>
   </section>
-
 </template>
 
 <script>
 import EuroNewsLogo from "../assets/images/EuroNewsLogo.svg";
-import {
-  getAuth,
-  signOut
-} from "firebase/auth";
-
+import { getAuth, signOut } from "firebase/auth";
 
 export default {
   data() {
@@ -96,25 +98,26 @@ export default {
       e.target.parentNode.classList.toggle("rotate-[90deg]");
       this.$refs[refItemName].classList.toggle("hidden");
     },
-    logoutModal(){
-      this.$refs['logout'].classList.toggle('modal-active')
+    logoutModal() {
+      this.$refs["logout"].classList.toggle("modal-active");
     },
-    logout(){
+
+    logout() {
       useFirebase();
       const auth = getAuth();
       signOut(auth).then(() => {
-        this.$router.push('/')
-      })
-    }
+        this.$router.push("/");
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .modal-active {
   display: flex;
 }
+
 .active div:nth-child(2) {
   display: flex;
 }

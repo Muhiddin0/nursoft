@@ -1,15 +1,13 @@
 import { getApp, initializeApp } from "firebase/app";
-
 const firebaseConfig = {
-  apiKey: "AIzaSyB8zGet40U6xCHNWBTrtgzY8Xuq2K9iC9Q",
-  authDomain: "nursoftuz-e1546.firebaseapp.com",
-  projectId: "nursoftuz-e1546",
-  storageBucket: "nursoftuz-e1546.appspot.com",
-  messagingSenderId: "509153009008",
-  appId: "1:509153009008:web:81294c9b5df3b2fd3743b5",
-  measurementId: "G-JP2YVD5MCS",
+  apiKey: "AIzaSyBYuSCFDir4eyBu5xf0fpHgMcVqXnsct1o",
+  authDomain: "newslater-3cd4b.firebaseapp.com",
+  projectId: "newslater-3cd4b",
+  storageBucket: "newslater-3cd4b.appspot.com",
+  messagingSenderId: "1098730287106",
+  appId: "1:1098730287106:web:a7124612fb927a3bbe371b",
+  measurementId: "G-916TQND1R8",
 };
-
-export default function userFirebase (){
-  initializeApp(firebaseConfig)
+export default function userFirebase() {
+  initializeApp(firebaseConfig);
 }

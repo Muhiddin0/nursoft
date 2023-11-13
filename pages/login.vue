@@ -3,8 +3,8 @@
   <section>
     <div class="container flex gap-3 min-h-[90vh] justify-center items-center">
       <div>
-        <div class="flex flex-col gap-10 w-[100%] md:w-[446px] p-1 md:p-3 mx-auto">
-          <h1 class="text-2xl text-center">Create Your Account</h1>
+        <div class="flex flex-col gap-5 w-[100%] md:w-[446px] p-1 md:p-3 mx-auto">
+          <h1 class="text-2xl text-center">Login Your Account</h1>
 
           <label class="w-[100%] relative" for="">
             <input @input="changeValue" v-model="email" class="text-input" type="text" />
@@ -12,7 +12,7 @@
           </label>
 
           <label class="w-[100%] relative" for="">
-            <input @input="changeValue" v-model="password_1" class="text-input"
+            <input @input="changeValue" v-model="password" class="text-input"
               :type="show_password ? 'text' : 'password'" />
             <p class="placeholder-p">Enter your password</p>
 
@@ -27,55 +27,49 @@
           </label>
         </div>
 
+        <div class="flex flex-col gap-4 items-center mt-7 w-[100%] md:w-[446px] p-1 md:p-3 my-6">
+          <button @click="signup" class="btn gap-3 w-[100%] sm:w-[400px] bg-green-500 text-white">
+            Login
+          </button>
+          <p>
+            Are you not account
+            <a class="text-green-500" href="google.com">Signup</a>
+            hear
+          </p>
+        </div>
+
         <div class="flex flex-col gap-4 items-center mt-7 w-[100%] md:w-[446px] p-1 md:p-3">
-          <button class="btn gap-3 w-[100%] sm:w-[400px] bg-black text-white">
-            <Icon name="mdi:github" />
-            Git Hub
-          </button>
-          <button class="btn gap-3 w-[100%] sm:w-[400px] bg-cyan-400 text-white">
-            <Icon name="mdi:twitter" />
-            Twitter
-          </button>
-          <button class="btn gap-3 w-[100%] sm:w-[400px] bg-cyan-600 text-white">
-            <Icon name="ic:twotone-facebook" />
-            Facebook
-          </button>
-          <button class="btn gap-3 w-[100%] sm:w-[400px] bg-orange-600 text-white">
+          <button @click="googleAuth" class="btn gap-3 w-[100%] sm:w-[400px] bg-orange-600 text-white">
             <Icon name="bi:google" />
             Google
           </button>
-        </div>
-
-        <div>
-          <p class="text-center max-w-[274px] mx-auto mt-6 mb-3">
-            You have alredy account
-            <NuxtLink class="" to="/signup">signup</NuxtLink> hear
-          </p>
         </div>
       </div>
 
       <div
         class="flex-col hidden md:flex gap-6 justify-center items-center w-[440px] h-[90vh] p-2 border-[2px] bg-green-500 text-white">
-        <h1 class="text-3xl">Hello world</h1>
+        <h1 class="text-3xl">Hi my friend</h1>
         <p class="text-center max-w-[274px]">
           Enter your personal details and strart journey with us
         </p>
-        <NuxtLink class="btn border-white border-[2px]" to="/signup">SIGN UP</NuxtLink>
+        <NuxtLink class="btn border-white border-[2px]" to="/signup">Signup</NuxtLink>
       </div>
     </div>
   </section>
 
-  <Messages />
+  <Messages v-for="message in messages" :message="message" />
 </template>
 
 <script>
 import { messages } from "~~/store/messages";
 import {
   getAuth,
-  setPersistence,
-  browserLocalPersistence,
-  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
+const googleProvider = new GoogleAuthProvider();
 
 useFirebase();
 const auth = getAuth();
@@ -83,46 +77,46 @@ const auth = getAuth();
 export default defineComponent({
   setup() {
     definePageMeta({
-      layout: false
-    })
+      layout: false,
+    });
   },
   data() {
     return {
       show_password: false,
       email: "",
-      password_1: "",
-      password_2: "",
-      first_name: "",
-      last_name: "",
+      password: "",
       messages: [],
     };
   },
   methods: {
     signup() {
-      setPersistence(auth, browserLocalPersistence).then(() => {
-        createUserWithEmailAndPassword(auth, this.email, this.password_1)
-          .then((userDetails) => {
-            user.value = userDetails.user;
-            userDetails.user.getIdToken().then((token) => {
-              serverAuth(token);
-            });
-          })
-          .catch((e) => {
-            this.messages.push(e.code);
-          });
-      });
+      signInWithEmailAndPassword(auth, 'salom1@gmail.com', 'UZBcoders2005')
+        .then((userCredential) => {
+          this.$router.push('/news')
+
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
     },
     changeValue(e) {
       let labelElm = e.target.parentElement;
       labelElm.classList.add("active");
     },
-  },
-  mounted() {
-    messages.push("salom");
-    console.log(messages);
+
+    googleAuth() {
+      signInWithPopup(auth, googleProvider)
+        .then((e) => {
+          this.$router.push("/news");
+        })
+        .catch((error) => {
+          this.messages.push(error.code);
+        });
+    },
   },
 });
-
 </script>
 
 <style scoped>
